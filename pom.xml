@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.7.12</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <!--版本配置位置	-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <build.version>1.0.0</build.version>
+    </properties>
+
+    <!--慧聚平台内容看门狗	-->
+    <groupId>com.ddd</groupId>
+    <artifactId>ddd-one-module</artifactId>
+    <version>${build.version}</version>
+    <name>ddd-one-module</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <!--移除掉 spring boot 默认的日志启动器-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--引用 log4j2 spring boot 启动器，内部依赖了 slf4j、log4j-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+        <!--  参数校验Controller层      -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <!--  redis的操作使用，包含队列、缓存、分布式锁    -->
+        <dependency>
+            <groupId>org.redisson</groupId>
+            <artifactId>redisson</artifactId>
+            <version>3.18.0</version>
+        </dependency>
+        <!-- 需要使用到mysql的时候，打开mysql、druid线程池， mybatis-plus -->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.27</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.baomidou</groupId>-->
+<!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+<!--            <version>3.5.3.1</version>-->
+<!--        </dependency>-->
+<!--        &lt;!&ndash;  可监控线程池Druid      &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+<!--            <version>1.2.19</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <!--  guava-->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+        </dependency>
+        <!-- 使用gson不用fastjson，因为fastjson总爆出安全漏洞-->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.9</version>
+        </dependency>
+        <!-- commons begin -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.8</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.2</version>
+        </dependency>
+        <!--mapper类的转换工具-->
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>1.5.3.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>1.5.3.Final</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--  时间操作函数joda-time https://www.joda.org/joda-time/changes-report.html-->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.12.5</version>
+        </dependency>
+        <!--assertj校验工具增强的assert判断-->
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <!-- use 2.9.1 for Java 7 projects -->
+            <version>3.22.0</version>
+            <scope>test</scope>
+        </dependency>
+        <!--mockito-inline 比 mockito-core 支持的mock方法更多，比如mock静态方法等,且包含了mockito-core且这两个依赖不能同时使用-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-inline</artifactId>
+            <scope>4.3.1</scope>
+        </dependency>
+        <!-- apache httpclient组件 用于连接harbor api2.0-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+        </dependency>
+        <!-- apache httpclient组件 用于连接天翼云日志服务-->
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+        </dependency>
+        <!--  它是一个强大的内容分析工具包，专为解析和提取各种文件类型（如文档、图像、视频、音频等）中的元数据和文本内容而设计      -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-core</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+
+        <!--swagger2 依赖 用于导入yapi    -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+        <!--解决Swagger访问主页时的NumberFormatException问题-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--  图片处理的工具类      -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.8</version>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.2</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- Spring Data Elasticsearch 最后开源的7.10.2版本，高版本的client提供的方法完全不一样了，需要重新看开源的示例-->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>elasticsearch-rest-high-level-client</artifactId>
+            <version>7.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>7.10.2</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <!--   镜像打包使用，密码不提供 ，这个是k8s上使用jib构建镜像包到harbor上        -->
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <from>
+                        <image>harbor的镜像地址</image>
+                        <auth>
+                            <username>xx</username>
+                            <password>xx</password>
+                        </auth>
+                    </from>
+                    <to>
+                        <image>harbor的镜像地址</image>
+                        <tags>
+                            <tag>xx-tag</tag>
+                        </tags>
+                        <auth>
+                            <username>xx</username>
+                            <password>xx</password>
+                        </auth>
+                    </to>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                    <container>
+                        <workingDirectory>/work</workingDirectory>
+                        <!--jvm的配置参数在jlib的打包镜像的配置方式-->
+                        <jvmFlags>
+                            <jvmFlag>-Dspring.profiles.active=test</jvmFlag>
+                            <jvmFlag>-Duser.timezone=Asia/Shanghai</jvmFlag>
+                            <jvmFlag>-Xms4g</jvmFlag>
+                            <jvmFlag>-Xmx4g</jvmFlag>
+                            <jvmFlag>-XX:MetaspaceSize=256m</jvmFlag>
+                            <jvmFlag>-XX:MaxMetaspaceSize=512m</jvmFlag>
+                            <jvmFlag>-XX:+UseG1GC</jvmFlag>
+                            <jvmFlag>-XX:ParallelGCThreads=4</jvmFlag>
+                            <jvmFlag>-XX:ConcGCThreads=4</jvmFlag>
+                            <!-- jdk8配置远程调试参数 -->
+                            <jvmFlag>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8418
+                            </jvmFlag>
+                        </jvmFlags>
+                        <ports>
+                            <!-- 暴露服务端口 -->
+                            <port>8410</port>
+                            <!--暴露调试端口-->
+                            <port>8418</port>
+                        </ports>
+                        <!--服务放到哪个目录下-->
+                        <workingDirectory>/work</workingDirectory>
+                        <mainClass>com.ddd.example.OneModuleApplication</mainClass>
+                        <!-- 设置容器创建时间 -->
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                    <allowInsecureRegistries>true</allowInsecureRegistries>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+</project>

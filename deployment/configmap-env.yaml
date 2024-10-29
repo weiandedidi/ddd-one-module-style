@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: com-ddd-example
+  namespace: xx
+data:
+  DB_HOST: "xxx"
+  DB_PORT: "xxx"

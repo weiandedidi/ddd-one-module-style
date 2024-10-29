@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: com-ddd-example
+  namespace: name-space
+  labels:
+    app: com-ddd-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: com-ddd-example
+  template:
+    metadata:
+      labels:
+        app: com-ddd-example
+    spec:
+      imagePullSecrets:
+        - name: docker-login
+      containers:
+        - name: com-ddd-example
+          image: harbor的image位置
+          resources: { }
+          livenessProbe:
+            httpGet:
+              path: /tools/util/health # k8s活动探针
+              port: 8410
+            initialDelaySeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /tools/util/health
+              port: 8410
+            initialDelaySeconds: 30
+          ports:
+            - containerPort: 8410
+              name: web
+          env:
+            - name: TZ
+              value: Asia/Shanghai
+            - name: JAVA_OPTS
+              value: >-
+                -server -Xms4g -Xmx4g -XX:MetaspaceSize=256m
+                -XX:MaxMetaspaceSize=512m -XX:+UseG1GC -XX:ParallelGCThreads=4
+                -XX:ConcGCThreads=4
+          envFrom:
+            - configMapRef:
+                name: com-ddd-example
+            - secretRef:
+                name: com-ddd-example
+      volumes:
+        - name: localtime
+          hostPath:
+            path: /usr/share/zoneinfo/Asia/Shanghai
+      restartPolicy: Always
+      hostAliases: # 容器的host配置，同/etc/hosts映射
+        - ip: 10.211.2.4
+          hostnames:
+            - url1.example.com
+
