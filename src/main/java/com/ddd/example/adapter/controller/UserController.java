@@ -5,7 +5,6 @@ import com.ddd.example.adapter.controller.query.UserVo;
 import com.ddd.example.application.user.UserApplicationService;
 import com.ddd.example.application.user.bo.UseInfoBo;
 import com.ddd.example.infrastructure.aspect.TraceLog;
-import com.ddd.example.infrastructure.valueobject.BizErrorCodeEnum;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

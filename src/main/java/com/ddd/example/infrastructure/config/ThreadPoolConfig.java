@@ -32,7 +32,7 @@ public class ThreadPoolConfig {
 
 
     @Bean
-    public ExecutorService traceThreadPool() {
+    public TraceThreadPool traceThreadPool() {
         // 创建一个固定大小的线程池，cpu的2倍
         return TraceThreadPool.newCustomThreadPool(corePoolSize, maximumPoolSize, keepAliveTime, queueCapacity);
     }

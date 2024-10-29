@@ -1,5 +1,7 @@
 package com.ddd.example.infrastructure.utils;
 
+import lombok.Getter;
+
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -59,10 +61,12 @@ public class TraceThreadPool extends ThreadPoolExecutor {
     /**
      * 自定义线程工厂，定义名称
      */
-    static class TraceThreadFactory implements ThreadFactory {
+    public static class TraceThreadFactory implements ThreadFactory {
         private static final AtomicInteger poolNumber = new AtomicInteger(1);
         private final ThreadGroup group;
+        @Getter
         private final AtomicInteger threadNumber = new AtomicInteger(1);
+        @Getter
         private final String namePrefix;
 
         TraceThreadFactory() {
@@ -85,9 +89,10 @@ public class TraceThreadPool extends ThreadPoolExecutor {
                 t.setPriority(Thread.NORM_PRIORITY);
             return t;
         }
+
     }
 
-    public static ExecutorService newCustomThreadPool(int corePoolSize,
+    public static TraceThreadPool newCustomThreadPool(int corePoolSize,
                                                       int maximumPoolSize,
                                                       long keepAliveTime,
                                                       int queueCapacity) {
