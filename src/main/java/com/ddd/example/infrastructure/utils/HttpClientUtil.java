@@ -2,6 +2,7 @@ package com.ddd.example.infrastructure.utils;
 
 import com.ddd.example.infrastructure.utils.httpdto.JsonStringHttpResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -49,6 +50,10 @@ public class HttpClientUtil {
     }
 
     public static JsonStringHttpResponse doGetJsonRequest(String url, Map<String, String> paramsMap, int timeout) {
+        return doGetJsonRequest(url, paramsMap, timeout, null, null);
+    }
+
+    public static JsonStringHttpResponse doGetJsonRequest(String url, Map<String, String> paramsMap, int timeout, String userName, String password) {
         //创建client
         CloseableHttpClient httpClient = HttpClients.createDefault();
         //创建配置
@@ -66,6 +71,9 @@ public class HttpClientUtil {
         }
         request.setConfig(requestConfig);
         request.setHeader("x-trace-id", TraceIdUtil.getTraceId());
+        if (StringUtils.isNotEmpty(userName) && StringUtils.isNotEmpty(password)) {
+            request.setHeader("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString((userName + ":" + password).getBytes()));
+        }
         // 执行请求
         JsonStringHttpResponse jsonResponse = new JsonStringHttpResponse();
         CloseableHttpResponse response = null;
@@ -127,6 +135,44 @@ public class HttpClientUtil {
             closeClient(response, httpClient);
         }
         return jsonResponse;
+    }
+
+    /**
+     * //账号
+     *
+     * @param url
+     * @param timeout 超时时间毫秒
+     * @return
+     */
+    public static boolean send204TextRequest(String url, String textString, int timeout, String userName, String password) {
+        //创建client
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        //创建配置
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(timeout).setSocketTimeout(timeout).build();
+
+        // 创建POST请求
+        HttpPost request = new HttpPost(url);
+        request.setConfig(requestConfig);
+        //设置使用utf-8传输
+        request.setHeader("Content-Type", "text/plain");
+        StringEntity entity = new StringEntity(textString, StandardCharsets.UTF_8);
+        request.setEntity(entity);
+        if (StringUtils.isNotEmpty(userName) && StringUtils.isNotEmpty(password)) {
+            request.setHeader("Authorization", "Basic " + java.util.Base64.getEncoder().encodeToString((userName + ":" + password).getBytes()));
+        }
+
+        // 执行请求
+        CloseableHttpResponse response = null;
+        try {
+            response = httpClient.execute(request);
+            //非2xx 开头就是异常，204是vm的正常返回
+            return Optional.ofNullable(response).map(r -> 2 == r.getStatusLine().getStatusCode() / 100).orElse(false);
+        } catch (IOException e) {
+            log.error("sendTextRequest error, traceId ={}, e", TraceIdUtil.getTraceId(), e);
+        } finally {
+            closeClient(response, httpClient);
+        }
+        return false;
     }
 
     /**

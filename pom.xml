@@ -62,22 +62,22 @@
             <version>3.18.0</version>
         </dependency>
         <!-- 需要使用到mysql的时候，打开mysql、druid线程池， mybatis-plus -->
-<!--        <dependency>-->
-<!--            <groupId>mysql</groupId>-->
-<!--            <artifactId>mysql-connector-java</artifactId>-->
-<!--            <version>8.0.27</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.baomidou</groupId>-->
-<!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
-<!--            <version>3.5.3.1</version>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash;  可监控线程池Druid      &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>com.alibaba</groupId>-->
-<!--            <artifactId>druid-spring-boot-starter</artifactId>-->
-<!--            <version>1.2.19</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>mysql</groupId>-->
+        <!--            <artifactId>mysql-connector-java</artifactId>-->
+        <!--            <version>8.0.27</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.baomidou</groupId>-->
+        <!--            <artifactId>mybatis-plus-boot-starter</artifactId>-->
+        <!--            <version>3.5.3.1</version>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash;  可监控线程池Druid      &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.alibaba</groupId>-->
+        <!--            <artifactId>druid-spring-boot-starter</artifactId>-->
+        <!--            <version>1.2.19</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -206,7 +206,6 @@
             <artifactId>elasticsearch</artifactId>
             <version>7.10.2</version>
         </dependency>
-
 
     </dependencies>
 
