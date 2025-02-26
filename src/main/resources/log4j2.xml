@@ -17,7 +17,7 @@
 <!--        </RollingFile>-->
         <!--控制台打印-->
         <console name="CONSOLE-LOG" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} =>[%thread] =>%-5level %logger{50}:%line - %X{traceId} - %msg%n"/>
+            <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss.SSS}][%-5level][traceId=%mdc{trace_id}][spanId=%mdc{span_id}][%thread] => %logger{60}:%line - %X{traceId} - %msg%n"/>
         </console>
     </appenders>
 

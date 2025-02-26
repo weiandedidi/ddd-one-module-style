@@ -50,4 +50,9 @@ public class UserController {
         List<UserVo> userVos = UserVo.UserVoCovert.INSTANCE.toUserVoList(useInfoBos);
         return ResponseVO.successResponse(userVos);
     }
+
+    @RequestMapping(value = "hi", method = RequestMethod.GET)
+    public ResponseVO<?> sayHi() {
+        return ResponseVO.successEmptyResponse();
+    }
 }
