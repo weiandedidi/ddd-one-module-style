@@ -28,6 +28,13 @@ public class ToolController {
     @Autowired
     TraceThreadPool traceThreadPool;
 
+    //服务存活的检验方法
+    @RequestMapping(value = "/health", method = RequestMethod.GET)
+    public String health() {
+        return "OK";
+    }
+
+
     @RequestMapping(value = "/threadPoolInfo/get", method = RequestMethod.GET)
     public ResponseVO<ThreadPoolInfo> getThreadPoolInfo() {
         ThreadPoolInfo threadPoolInfo = new ThreadPoolInfo();

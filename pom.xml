@@ -226,23 +226,23 @@
             <plugin>
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.4.5</version>
                 <configuration>
                     <from>
-                        <image>harbor的镜像地址</image>
+                        <image>harbor.ctyuncdn.cn/mlspace/openjdk-helm:8</image>
                         <auth>
-                            <username>xx</username>
-                            <password>xx</password>
+                            <username>maqd1</username>
+                            <password>NpYWZgMO1hC9XQCSwpKyfaTjiiLKsr1I</password>
                         </auth>
                     </from>
                     <to>
-                        <image>harbor的镜像地址</image>
+                        <image>harbor.ctyuncdn.cn/mlspace/ddd-one-module-style</image>
                         <tags>
-                            <tag>xx-tag</tag>
+                            <tag>1.0</tag>
                         </tags>
                         <auth>
-                            <username>xx</username>
-                            <password>xx</password>
+                            <username>maqd1</username>
+                            <password>NpYWZgMO1hC9XQCSwpKyfaTjiiLKsr1I</password>
                         </auth>
                     </to>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
