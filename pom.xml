@@ -231,8 +231,8 @@
                     <from>
                         <image>harbor.ctyuncdn.cn/mlspace/openjdk-helm:8</image>
                         <auth>
-                            <username>maqd1</username>
-                            <password>NpYWZgMO1hC9XQCSwpKyfaTjiiLKsr1I</password>
+                            <username>xx</username>
+                            <password>xx</password>
                         </auth>
                     </from>
                     <to>
@@ -241,8 +241,8 @@
                             <tag>2.0</tag>
                         </tags>
                         <auth>
-                            <username>maqd1</username>
-                            <password>NpYWZgMO1hC9XQCSwpKyfaTjiiLKsr1I</password>
+                            <username>xx</username>
+                            <password>xx</password>
                         </auth>
                     </to>
                     <allowInsecureRegistries>true</allowInsecureRegistries>
