@@ -10,6 +10,11 @@ ARG jarName=target/ddd-one-module-*.jar
 #ARG JAVA_OPTS_TEST="-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8418 -server -Xms4g -Xmx4g -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -XX:+UseG1GC -XX:ParallelGCThreads=4 -XX:ConcGCThreads=4"
 #ARG JAVA_OPTS_PROD="-server -Xms4g -Xmx4g -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -XX:+UseG1GC -XX:ParallelGCThreads=4 -XX:ConcGCThreads=4"
 
+# 定义java的启动参数，用于test环境和线上环境区别debug使用，在deployment传入env即可
+ARG JAVA_OPTS_DEFAULT="-Dspring.profiles.active=prod -server -Xms4g -Xmx4g -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -XX:+UseG1GC -XX:ParallelGCThreads=4 -XX:ConcGCThreads=4 -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:8418"
+# 2. 将构建参数赋值给环境变量（容器运行时可访问,k8s中的deployment配置的env读取即可）
+ENV JAVA_OPTS=${JAVA_OPTS_DEFAULT}
+
 WORKDIR /work
 
 COPY ${jarName} /app.jar

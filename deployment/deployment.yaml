@@ -21,16 +21,16 @@ spec:
         - name: com-ddd-example
           image: harbor的image位置
           resources: { }
-          livenessProbe:
-            httpGet:
-              path: /tools/util/health # k8s活动探针
-              port: 8410
-            initialDelaySeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /tools/util/health
-              port: 8410
-            initialDelaySeconds: 30
+#          livenessProbe:     dev需要配置远程debug不需要这个探活，因为会被debug阻塞探测不到
+#            httpGet:
+#              path: /tools/util/health # k8s活动探针
+#              port: 8410
+#            initialDelaySeconds: 30
+#          readinessProbe:
+#            httpGet:
+#              path: /tools/util/health
+#              port: 8410
+#            initialDelaySeconds: 30
           ports:
             - containerPort: 8410
               name: web
