@@ -226,6 +226,60 @@ k8s集群内的服务访问本服务，集群内访问方式：
 1. k8s上port forward service中的8418端口到本地端口（和服务启动的debug端口一致）用于remote方式debug
 2. 通过远程debug的方式快速调试代码
 
+# 快速启动mock的server服务wiremock
+
+运行后 WireMock 就会在 http://127.0.0.1:8080 启动。
+```shell
+docker run -d \
+  --name wiremock \
+  -p 8080:8080 \
+  --rm \
+  wiremock/wiremock:latest
+```
+
+执行下面这条 curl，WireMock 会永久保存这个接口规则：
+
+```json
+curl -X POST http://127.0.0.1:8080/__admin/mappings \
+-H "Content-Type: application/json" \
+-d '{
+  "request": {
+    "method": "POST",
+    "url": "/coding/v1/messages",
+    "headers": {
+      "Content-Type": {
+        "equalTo": "application/json"
+      },
+      "x-api-key": {
+        "equalTo": "cp_f2d1855a2723479f83f5a00f4b8b9915"
+      }
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": "{\"error\":{\"code\":\"500006\",\"message\":\"该API已触发流量限制\",\"type\":\"api_error\"},\"type\":\"error\"}",
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}'
+```
+1. 停止 WireMock
+```bash
+docker stop wiremock
+```
+2. 重启 WireMock 容器
+```bash
+docker start wiremock
+```
+3. 查看所有已配置的 Mock 接口
+```bash
+curl http://127.0.0.1:8080/__admin/mappings
+```
+4. 删除所有mock接口
+```bash
+curl -X DELETE http://127.0.0.1:8080/__admin/mappings
+```
 
 
 
