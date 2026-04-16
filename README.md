@@ -251,7 +251,7 @@ curl -X POST http://127.0.0.1:8080/__admin/mappings \
         "equalTo": "application/json"
       },
       "x-api-key": {
-        "equalTo": "cp_f2d1855a2723479f83f5a00f4b8b9915"
+        "equalTo": "xxxx"
       }
     }
   },
