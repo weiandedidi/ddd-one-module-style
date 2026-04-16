@@ -41,12 +41,19 @@ spring:
 #    database: 10
 #    password: v8oB9GrMiXjYp5fi
 #    timeout: 5000 # 连接超时时间5000ms
-#    lettuce:
+#    lettuce:   # 这个是spring-data-redis自己的线程池lettuce的配置，redisson是需要自己配置线程池的
 #      pool:
 #        max-active: 8 # 连接池中最大连接数
 #        max-wait: -1 # 获取连接的最大等待时间（毫秒），-1 表示无限等待
 #        max-idle: 8 # 连接池中最大空闲连接数
 #        min-idle: 5 # 连接池中最小空闲连接数
+
+# 先不配置这些，需要调优的时候再弄
+redisson:
+  coreSize: 8         # 2倍cpu的数量
+  connectSize: 32     # 连接数别太大，多机器一起链接会把redis的链接打满
+  idleSize: 8
+  timeout: 5000
 
 #swagger线上配置成false，线下true用于生成文档
 swagger:

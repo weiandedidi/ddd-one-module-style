@@ -1,0 +1,64 @@
+version: "3.9"
+
+services:
+
+  # =====================
+  # MySQL（多库）
+  # =====================
+  mysql:
+    image: mysql:8.0
+    container_name: dev-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "127.0.0.1:3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init:/docker-entrypoint-initdb.d
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --skip-name-resolve
+
+  # =====================
+  # Redis
+  # =====================
+  redis:
+    image: redis:7
+    container_name: dev-redis
+    restart: always
+    command: >
+      redis-server
+      --requirepass ${ST_REDIS_PASSWORD}
+      --rename-command FLUSHALL ""
+      --rename-command FLUSHDB ""
+    ports:
+      - "127.0.0.1:6379:6379"
+
+  # =====================
+  # RocketMQ NameServer
+  # =====================
+  rocketmq-namesrv:
+    image: apache/rocketmq:5.1.4
+    container_name: dev-rmq-namesrv
+    ports:
+      - "127.0.0.1:9876:9876"
+    command: sh mqnamesrv
+
+  # =====================
+  # RocketMQ Broker
+  # =====================
+  rocketmq-broker:
+    image: apache/rocketmq:5.1.4
+    container_name: dev-rmq-broker
+    depends_on:
+      - rocketmq-namesrv
+    environment:
+      NAMESRV_ADDR: 127.0.0.1:9876
+    ports:
+      - "127.0.0.1:10911:10911"
+    command: sh mqbroker -n 127.0.0.1:9876
+
+volumes:
+  mysql_data:

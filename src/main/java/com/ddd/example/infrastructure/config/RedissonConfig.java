@@ -25,6 +25,15 @@ public class RedissonConfig {
     //    @Value("${spring.redis.password}")
     private String password;
 
+    @Value("${redisson.coreSize}")
+    private String coreSize;
+    @Value("${redisson.connectSize}")
+    private String connectSize;
+    @Value("${redisson.idleSize}")
+    private String ideSize;
+    @Value("${redisson.timeout}")
+    private String timeout;
+
     /**
      * 依赖k8s的调度，在主机上配置好redis
      *
@@ -33,10 +42,16 @@ public class RedissonConfig {
 //    @Bean(destroyMethod = "shutdown")
     public RedissonClient redisson() {
         Config config = new Config();
+        //线程池优化 默认16 → 降低，降低redis的连接压力
+        config.setThreads(8);
+        config.setNettyThreads(8);
         config.useSingleServer()
                 .setAddress("redis://" + host + ":" + port)
                 .setPassword(password)
-                .setDatabase(Integer.parseInt(database));
+                .setDatabase(Integer.parseInt(database))
+                .setConnectionPoolSize(Integer.parseInt(connectSize))          // 默认64 → 降低
+                .setConnectionMinimumIdleSize(Integer.parseInt(ideSize))   // 默认24 → 降低
+                .setTimeout(Integer.parseInt(timeout));
         return Redisson.create(config);
     }
 
