@@ -1,4 +1,3 @@
-import com.ddd.example.infrastructure.utils.HttpClientUtil;
 import com.ddd.example.infrastructure.utils.httpdto.JsonStringHttpResponse;
 import com.google.common.collect.Maps;
 import org.junit.Test;

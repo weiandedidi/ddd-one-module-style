@@ -32,7 +32,7 @@ spec:
 #              port: 8410
 #            initialDelaySeconds: 30
           ports:
-            - containerPort: 8410
+            - containerPort: 8080
               name: web
           env:
             - name: TZ

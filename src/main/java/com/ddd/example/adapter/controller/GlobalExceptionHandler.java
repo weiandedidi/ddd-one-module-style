@@ -2,13 +2,13 @@ package com.ddd.example.adapter.controller;
 
 import com.ddd.example.infrastructure.valueobject.BizErrorCodeEnum;
 import com.ddd.example.infrastructure.utils.TraceIdUtil;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.validation.ConstraintViolationException;
 
 /**
  * controller层全局异常捕获

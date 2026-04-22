@@ -1,12 +1,12 @@
 package com.ddd.example.application.consumer;
 
+import jakarta.annotation.PostConstruct;
 import org.redisson.api.RTopic;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 
 /**
  * 消息接收的管理器

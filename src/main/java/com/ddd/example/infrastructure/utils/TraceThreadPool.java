@@ -1,6 +1,7 @@
 package com.ddd.example.infrastructure.utils;
 
 import lombok.Getter;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -35,23 +36,26 @@ public class TraceThreadPool extends ThreadPoolExecutor {
     }
 
     @Override
-    public void execute(Runnable command) {
+    public void execute(@NotNull Runnable command) {
         String traceId = TraceIdUtil.getTraceId();
         super.execute(new TraceRunnable(command, traceId));
     }
 
+    @NotNull
     @Override
-    public <T> Future<T> submit(Callable<T> task) {
+    public <T> Future<T> submit(@NotNull Callable<T> task) {
         String traceId = TraceIdUtil.getTraceId();
         return super.submit(new TraceCallable<>(task, traceId));
     }
 
+    @NotNull
     @Override
-    public Future<?> submit(Runnable task) {
+    public Future<?> submit(@NotNull Runnable task) {
         String traceId = TraceIdUtil.getTraceId();
         return super.submit(new TraceRunnable(task, traceId));
     }
 
+    @NotNull
     @Override
     public <T> Future<T> submit(Runnable task, T result) {
         String traceId = TraceIdUtil.getTraceId();
@@ -70,9 +74,8 @@ public class TraceThreadPool extends ThreadPoolExecutor {
         private final String namePrefix;
 
         TraceThreadFactory() {
-            SecurityManager s = System.getSecurityManager();
-            group = (s != null) ? s.getThreadGroup() :
-                    Thread.currentThread().getThreadGroup();
+            // SecurityManager 已弃用，直接使用当前线程的 ThreadGroup
+            group = Thread.currentThread().getThreadGroup();
             namePrefix = "tracePool-" +
                     poolNumber.getAndIncrement() +
                     "-thread-";

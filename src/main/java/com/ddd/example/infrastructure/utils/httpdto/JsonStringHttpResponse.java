@@ -20,5 +20,9 @@ public class JsonStringHttpResponse {
      * 返回的消息体
      */
     private String body;
+    /**
+     * 请求返回的http状态码
+     */
+    private Integer statusCode;
 
 }

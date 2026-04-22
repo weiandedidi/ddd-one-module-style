@@ -1,7 +1,6 @@
 package com.ddd.example.infrastructure.utils.httpdto;
 
 import com.ddd.example.infrastructure.valueobject.BizException;
-import jdk.nashorn.internal.runtime.URIUtils;
 
 /**
  * http方法的包装类，用于封装业务获得结果后的http方法类

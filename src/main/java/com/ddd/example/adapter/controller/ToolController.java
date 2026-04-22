@@ -1,6 +1,8 @@
 package com.ddd.example.adapter.controller;
 
 import com.ddd.example.infrastructure.utils.TraceThreadPool;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -9,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.concurrent.*;
 
 /**

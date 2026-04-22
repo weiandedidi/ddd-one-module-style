@@ -5,24 +5,29 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.12</version>
+        <version>3.5.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
     <!--版本配置位置	-->
     <properties>
+        <java.version>17</java.version>
+        <spring-boot.version>3.5.0</spring-boot.version>
+        <lombok.version>1.18.30</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <build.version>1.0.0</build.version>
+        <guava.version>33.2.1-jre</guava.version>
+        <gson.version>2.10.1</gson.version>
+        <mapstruct.version>1.5.5.Final</mapstruct.version>
+        <mapstruct-processor.version>1.5.5.Final</mapstruct-processor.version>
     </properties>
 
     <!--慧聚平台内容看门狗	-->
     <groupId>com.ddd</groupId>
     <artifactId>ddd-one-module</artifactId>
-    <version>${build.version}</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>ddd-one-module</name>
-    <packaging>jar</packaging>
+    <description>ddd-one-module</description>
 
     <dependencies>
         <dependency>
@@ -41,6 +46,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-log4j2</artifactId>
         </dependency>
+        <!-- spring-boot-starter-test自带了assertj校验工具增强的assert判断       -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -55,11 +61,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
-        <!--  redis的操作使用，包含队列、缓存、分布式锁    -->
+        <!--   文档类api接口处理使用springdoc-openapi基于 OpenAPI 3 规范，Swagger UI，目前ui和springboot3.5.0配置有问题，先使用api不用ui   -->
+        <!-- OpenAPI 核心 -->
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-api</artifactId>
+            <version>2.8.17</version>
+        </dependency>
+
+        <!--  redis的操作使用使用redisson，内部使用了netty，包含队列、缓存、分布式锁    -->
         <dependency>
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
-            <version>3.18.0</version>
+            <version>3.52.0</version>
         </dependency>
         <!-- 需要使用到mysql的时候，打开mysql、druid线程池， mybatis-plus -->
         <!--        <dependency>-->
@@ -83,129 +97,81 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
+        <!-- springboot 的actuator监控项 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- prometheus -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-prometheus</artifactId>
+        </dependency>
         <!--  guava-->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>${guava.version}</version>
         </dependency>
         <!-- 使用gson不用fastjson，因为fastjson总爆出安全漏洞-->
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.8.9</version>
+            <version>${gson.version}</version>
         </dependency>
         <!-- commons begin -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.8</version>
+            <version>3.17.0</version> <!-- 必须 ≥ 3.14.0，兼容 springdoc -->
         </dependency>
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.2</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.5.0-M2</version>
         </dependency>
         <!--mapper类的转换工具-->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.3.Final</version>
+            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.3.Final</version>
             <scope>provided</scope>
+            <version>${mapstruct-processor.version}</version>
         </dependency>
-        <!--  时间操作函数joda-time https://www.joda.org/joda-time/changes-report.html-->
+        <!-- OkHttp 核心依赖（推荐最新稳定版，与Spring Boot 3.5.0兼容） -->
         <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time</artifactId>
-            <version>2.12.5</version>
-        </dependency>
-        <!--assertj校验工具增强的assert判断-->
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <!-- use 2.9.1 for Java 7 projects -->
-            <version>3.22.0</version>
-            <scope>test</scope>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.12.0</version> <!-- 2026年最新稳定版，适配Java 17+（Spring Boot 3.5.0默认Java 17） -->
         </dependency>
         <!--mockito-inline 比 mockito-core 支持的mock方法更多，比如mock静态方法等,且包含了mockito-core且这两个依赖不能同时使用-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
-            <scope>4.3.1</scope>
-        </dependency>
-        <!-- apache httpclient组件 用于连接harbor api2.0-->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-        </dependency>
-        <!-- apache httpclient组件 用于连接天翼云日志服务-->
-        <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpmime</artifactId>
-        </dependency>
-        <!--  它是一个强大的内容分析工具包，专为解析和提取各种文件类型（如文档、图像、视频、音频等）中的元数据和文本内容而设计      -->
-        <dependency>
-            <groupId>org.apache.tika</groupId>
-            <artifactId>tika-core</artifactId>
-            <version>2.8.0</version>
-        </dependency>
-
-        <!--swagger2 依赖 用于导入yapi    -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
-
-        <!--解决Swagger访问主页时的NumberFormatException问题-->
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>1.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>1.6.0</version>
+            <version>4.11.0</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
-        <!--  图片处理的工具类      -->
-        <dependency>
-            <groupId>net.coobird</groupId>
-            <artifactId>thumbnailator</artifactId>
-            <version>0.4.8</version>
-        </dependency>
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.5.2</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>guava</artifactId>
-                    <groupId>com.google.guava</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!-- Spring Data Elasticsearch 最后开源的7.10.2版本，高版本的client提供的方法完全不一样了，需要重新看开源的示例-->
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <version>7.10.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.elasticsearch</groupId>
-            <artifactId>elasticsearch</artifactId>
-            <version>7.10.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch.client</groupId>-->
+<!--            <artifactId>elasticsearch-rest-high-level-client</artifactId>-->
+<!--            <version>7.10.2</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.elasticsearch</groupId>-->
+<!--            <artifactId>elasticsearch</artifactId>-->
+<!--            <version>7.10.2</version>-->
+<!--        </dependency>-->
+
 
     </dependencies>
 
