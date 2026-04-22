@@ -78,7 +78,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"  # 所有的都监控
+        include: prometheus,health,info  # 所有的都监控
   endpoint:
     prometheus:
       enabled: true

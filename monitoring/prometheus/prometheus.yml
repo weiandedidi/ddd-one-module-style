@@ -7,6 +7,5 @@ scrape_configs:
     static_configs:
       - targets: ['host.docker.internal:8080']
 
-
 # host.docker.internal 用于访问你本机 IDEA 启动的服务
 # K8s 里这里会换成 Service 名
