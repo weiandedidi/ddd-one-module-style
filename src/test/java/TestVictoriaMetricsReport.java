@@ -1,3 +1,4 @@
+import com.ddd.example.infrastructure.utils.HttpClientUtil;
 import com.ddd.example.infrastructure.utils.httpdto.JsonStringHttpResponse;
 import com.google.common.collect.Maps;
 import org.junit.Test;
@@ -77,13 +78,13 @@ public class TestVictoriaMetricsReport {
      * @return 查询结果
      * @throws IOException 异常
      */
-    private static JsonStringHttpResponse queryVictoriaMetrics(String url, String promql, long start, long end, String step, int timeout, String userName, String password) throws IOException {
+    private static JsonStringHttpResponse queryVictoriaMetrics(String url, String promql, long start, long end, String step, String userName, String password) throws IOException {
         Map<String, String> params = new HashMap<>();
         params.put("query", promql);
         params.put("start", String.valueOf(start));
         params.put("end", String.valueOf(end));
         params.put("step", step);
-        return HttpClientUtil.doGetJsonRequest(url, params, timeout, userName, password);
+        return HttpClientUtil.getInstance().doGetJsonRequestWithBasicAuth(url, params, userName, password);
     }
 
     /**
@@ -140,7 +141,7 @@ public class TestVictoriaMetricsReport {
         String pwd = "ZmKK5YhdMVZpuOM3";
 
 
-        boolean result = HttpClientUtil.send204TextRequest(vm_url, metricsData.toString(), SOCKET_TIMEOUT, userName, pwd);
+        boolean result = HttpClientUtil.getInstance().post204RequestWithAuth(vm_url, metricsData.toString(), userName, pwd);
 //        上报204就是成功
         System.out.println("result: " + result);
     }
@@ -162,7 +163,7 @@ public class TestVictoriaMetricsReport {
         String promql = "increase(dog_test_http_text_xx_count[1h])";
         String userName = "monitoradmin";
         String pwd = "ZmKK5YhdMVZpuOM3";
-        JsonStringHttpResponse response = queryVictoriaMetrics(url, promql, start, end, step, 5000, userName, pwd);
+        JsonStringHttpResponse response = queryVictoriaMetrics(url, promql, start, end, step, userName, pwd);
         System.out.println(response.getBody());
     }
 

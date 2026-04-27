@@ -1,17 +1,13 @@
 package com.ddd.example.application.consumer;
 
 import com.ddd.example.infrastructure.config.message.MessageHeader;
-import com.ddd.example.infrastructure.utils.GsonUtil;
+import com.ddd.example.infrastructure.utils.JSONUtil;
 import com.ddd.example.infrastructure.utils.TraceIdUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.MDC;
-import org.springframework.stereotype.Component;
 
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -30,7 +26,7 @@ public class RefreshMessageTraceAspect {
         Object[] args = joinPoint.getArgs();
         if (args.length > 1 && args[1] instanceof String) {
             String message = (String) args[1];
-            MessageHeader header = GsonUtil.fromJsonString(message, MessageHeader.class);
+            MessageHeader header = JSONUtil.fromJsonString(message, MessageHeader.class);
             if (null == header) {
                 log.error("MessageHeader is null, message {}", message);
                 return joinPoint.proceed();

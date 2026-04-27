@@ -1,6 +1,6 @@
 package com.ddd.example.infrastructure.aspect;
 
-import com.ddd.example.infrastructure.utils.GsonUtil;
+import com.ddd.example.infrastructure.utils.JSONUtil;
 import com.ddd.example.infrastructure.utils.TraceIdUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class TraceLogAspect {
         }
 
         String traceId = TraceIdUtil.getTraceId();
-        String request = GsonUtil.toJsonString(joinPoint.getArgs());
+        String request = JSONUtil.toJsonString(joinPoint.getArgs());
         Object result = null;
         try {
             result = joinPoint.proceed();
@@ -52,7 +52,7 @@ public class TraceLogAspect {
         } finally {
             long executionTime = System.currentTimeMillis() - start;
             //这个即使为null，也会打印
-            String response = GsonUtil.toJsonString(result);
+            String response = JSONUtil.toJsonString(result);
             //打印入参和出参
             log.info("traceId: {} - url: {} - method: {} - Execution time: {} ms - request: {} - response: {} ", traceId, url, methodName, executionTime, request, response);
         }
