@@ -6,7 +6,7 @@ services:
   # MySQL（多库）
   # =====================
   mysql:
-    image: mysql:8.0
+    image: docker.m.daocloud.io/mysql:8.0
     container_name: dev-mysql
     restart: always
     environment:
@@ -25,12 +25,12 @@ services:
   # Redis
   # =====================
   redis:
-    image: redis:7
+    image: docker.m.daocloud.io/redis:7
     container_name: dev-redis
     restart: always
     command: >
       redis-server
-      --requirepass ${ST_REDIS_PASSWORD}
+      --requirepass ${REDIS_PASSWORD}
       --rename-command FLUSHALL ""
       --rename-command FLUSHDB ""
     ports:
@@ -40,7 +40,7 @@ services:
   # RocketMQ NameServer
   # =====================
   rocketmq-namesrv:
-    image: apache/rocketmq:5.1.4
+    image: docker.m.daocloud.io/apache/rocketmq:5.1.4
     container_name: dev-rmq-namesrv
     ports:
       - "127.0.0.1:9876:9876"
@@ -50,7 +50,7 @@ services:
   # RocketMQ Broker
   # =====================
   rocketmq-broker:
-    image: apache/rocketmq:5.1.4
+    image: docker.m.daocloud.io/apache/rocketmq:5.1.4
     container_name: dev-rmq-broker
     depends_on:
       - rocketmq-namesrv

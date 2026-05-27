@@ -33,12 +33,11 @@ server:
 #    date-format: yyyy-MM-dd HH:mm:ss
 #    time-zone: GMT+8
     # redis的启动也是ok的，服务能启动，先注释掉
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#    database: 10
-#    password: v8oB9GrMiXjYp5fi
-#    timeout: 5000 # 连接超时时间5000ms
+redis:
+  host: 127.0.0.1
+  port: 6379
+  database: 0
+  password: ReD!s#8LmP2xQw9T
 #    lettuce:   # 这个是spring-data-redis自己的线程池lettuce的配置，redisson是需要自己配置线程池的
 #      pool:
 #        max-active: 8 # 连接池中最大连接数

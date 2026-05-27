@@ -12,17 +12,17 @@ import org.springframework.context.annotation.Configuration;
  * @date 2022/11/29
  * @describe
  */
-//@Configuration
+@Configuration
 public class RedissonConfig {
-    //    @Value("${spring.redis.host}")
+    @Value("${redis.host}")
     private String host;
-    //    @Value("${spring.redis.port}")
+    @Value("${redis.port}")
     private String port;
 
-    //    @Value("${spring.redis.database}")
+    @Value("${redis.database}")
     private String database;
 
-    //    @Value("${spring.redis.password}")
+    @Value("${redis.password}")
     private String password;
 
     @Value("${redisson.coreSize}")
@@ -39,7 +39,7 @@ public class RedissonConfig {
      *
      * @return
      */
-//    @Bean(destroyMethod = "shutdown")
+    @Bean(destroyMethod = "shutdown")
     public RedissonClient redisson() {
         Config config = new Config();
         //线程池优化 默认16 → 降低，降低redis的连接压力

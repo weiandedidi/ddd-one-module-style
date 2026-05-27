@@ -14,6 +14,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -61,15 +63,17 @@ public class UserController {
     }
 
     @PostMapping(value = "/student")
-    public ResponseVO<?> sayHi(@RequestBody StudentRequest request) {
+    public ResponseVO<?> hello(@RequestBody StudentRequest request) {
 
         // 关键：这里能看到前端传的【所有多余字段】
-        System.out.println("多余字段 = " + request.getExtraFields());
         log.info("多余字段：{}", JSONUtil.toJsonString(request.getExtraFields()));
+        log.info("全字段：{}", JSONUtil.toJsonString(request));
         return ResponseVO.successResponse(request);
     }
 
     @Data
+    @Getter
+    @Setter
     public static class StudentRequest{
         private String name;
         private Integer age;
@@ -82,6 +86,7 @@ public class UserController {
         public void set(String key, Object value) {
             extraFields.put(key, value);
         }
+
 
     }
 }
