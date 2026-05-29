@@ -94,7 +94,9 @@ management:
 
 如果是k8s主动获取用户注册 `Service + Pod annotation`  通过service的端口监听pod的信息
 
-方法一：最好做成javaagent的形式开放端口，
+方法一：最好做成javaagent的形式开放端口，就是标准采集器
+
+`Prometheus + Grafana（JMX Exporter）`
 
 方法二：就是k8s的deployment的配置中annotition配置监听端口，deployment的配置代码如下
 
@@ -129,6 +131,8 @@ scrape_configs:
 
 监控 http://prometheus:9090，配置详见[datasource.yml](grafana%2Fprovisioning%2Fdatasources%2Fdatasource.yml)
 
+本地查看  http://127.0.0.1:9090
+
 ## 4 进行docker-compose的设置
 详见：[docker-compose.yml](docker-compose.yml)， grafana依赖(depends_on)prometheus，两者通过monitor-net 桥接
 
@@ -147,6 +151,8 @@ scrape_configs:
 进入http://localhost:9090/targets endpoint显示数据的status是up的状态就是ok了
 
 ### 5.3 Grafana的dashboard配置
+
+本地访问地址：http://localhost:3000/
 
 登录输入docker-compose设置的密码
 

@@ -3,7 +3,8 @@ version: '3.8'
 services:
 
   prometheus:
-    image: prom/prometheus
+    # 国内 DaoCloud 镜像
+    image: docker.m.daocloud.io/prom/prometheus
     container_name: prometheus
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
@@ -13,7 +14,8 @@ services:
       - monitor-net
 
   grafana:
-    image: grafana/grafana
+    # 国内 DaoCloud 镜像
+    image: docker.m.daocloud.io/grafana/grafana
     container_name: grafana
     ports:
       - "3000:3000"
@@ -27,8 +29,6 @@ services:
       - GF_DATE_FORMATS_DEFAULT_TIMEZONE=Asia/Shanghai
     volumes:
       - ./grafana/provisioning:/etc/grafana/provisioning
-
-
 
 networks:
   monitor-net:
